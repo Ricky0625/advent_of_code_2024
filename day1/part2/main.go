@@ -40,7 +40,7 @@ func main() {
 		}
 
 		left = append(left, leftNum)
-		// add rightNumber to set, increment value (this is the occurence lah)
+		// add rightNumber to map, increment value (this is the occurence lah)
 		right[rightNum] = right[rightNum] + 1
 	}
 
