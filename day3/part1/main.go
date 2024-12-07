@@ -10,11 +10,8 @@ import (
 )
 
 func GetNums(str string) ([]int, error) {
-	var copy string = strings.TrimLeft(str, `mul(`)
-	copy = strings.TrimRight(copy, `)`)
-
 	nums := make([]int, 2)
-	tokens := strings.Split(copy, ",")
+	tokens := strings.Split(str, ",")
 
 	if len(tokens) != 2 {
 		return nil, fmt.Errorf("Invalid size of tokens")
@@ -43,18 +40,23 @@ func main() {
 	// define regex
 	// \d means number, {} means range
 	// \d{1,3} means at least 1 digit, at most 3 digit
-	reg, err := regexp.Compile(`mul\(\d{1,3},\d{1,3}\)`)
+	// do note that the x,y is wrapped with a pair of parentheses (captured group)
+	reg, err := regexp.Compile(`mul\((\d{1,3},\d{1,3})\)`)
 	if err != nil {
 		fmt.Println("Invalid regex expression.")
 		return
 	}
 
 	for _, line := range lines {
-		// find all matching substring in a string using regex
-		matches := reg.FindAllString(line, -1)
+		// returns all matches; each includes full match and captured groups
+		matches := reg.FindAllStringSubmatch(line, -1)
 
 		for _, match := range matches {
-			nums, err := GetNums(match)
+			if len(match) < 2 {
+				fmt.Println("No captured groups!")
+				break
+			}
+			nums, err := GetNums(match[1])
 			if err != nil {
 				fmt.Printf("Error: %v\n", err)
 			}
