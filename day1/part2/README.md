@@ -8,8 +8,8 @@
 
 ## Flow
 
-1. populate left and right (map)
-2. Iterate through keys of left
+1. populate left (list) and right (map)
+2. Iterate through values of left
 3. Use left's value as a key to get right map's value
 
 ## Learning (Not useful in this exercise lol)
