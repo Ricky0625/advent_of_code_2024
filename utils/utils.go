@@ -2,8 +2,10 @@ package utils
 
 import (
 	"bufio"
+	"fmt"
 	"log"
 	"os"
+	"strconv"
 )
 
 // write err != nil is annoying lol
@@ -41,4 +43,17 @@ func ReadLineByLine(filename string) ([]string, error) {
 	}
 
 	return lines, nil
+}
+
+func StringsToNums(tokens []string) ([]int, error) {
+	nums := make([]int, len(tokens))
+
+	for i, token := range tokens {
+		num, err := strconv.Atoi(token)
+		if err != nil {
+			return nil, fmt.Errorf("Failed to convert token to num: %v\n", token)
+		}
+		nums[i] = num
+	}
+	return nums, nil
 }
